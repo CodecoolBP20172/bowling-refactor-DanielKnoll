@@ -1,49 +1,49 @@
-def score(game):
+def score(points):
     result = 0
     frame = 1
-    in_first_half = True
-    for i in range(len(game)):
-        if game[i] == '/':
+    first_roll = True
+    for i in range(len(points)):
+        if points[i] == '/':
             result += 10 - last
         else:
-            result += get_value(game[i])
+            result += get_value(points[i])
 
-        if frame < 10 and get_value(game[i]) == 10:
-            if game[i] == '/':
-                result += get_value(game[i+1])
-            elif game[i] == 'X' or game[i] == 'x':
-                result += get_value(game[i+1])
-                if game[i+2] == '/':
-                    result += 10 - get_value(game[i+1])
+        if frame < 10 and get_value(points[i]) == 10:
+            if points[i] == '/':
+                result += get_value(points[i+1])
+            elif points[i] == 'X' or points[i] == 'x':
+                result += get_value(points[i+1])
+                if points[i+2] == '/':
+                    result += 10 - get_value(points[i+1])
                 else:
-                    result += get_value(game[i+2])
+                    result += get_value(points[i+2])
 
-        last = get_value(game[i])
+        last = get_value(points[i])
 
-        if not in_first_half:
+        if not first_roll:
             frame += 1
 
-        if in_first_half is True:
-            in_first_half = False
+        if first_roll is True:
+            first_roll = False
         else:
-            in_first_half = True
+            first_roll = True
 
-        if game[i] == 'X' or game[i] == 'x':
-            in_first_half = True
+        if points[i] == 'X' or points[i] == 'x':
+            first_roll = True
             frame += 1
     return result
 
 
-def get_value(char):
-    if char == '1' or char == '2' or char == '3' or \
-       char == '4' or char == '5' or char == '6' or \
-       char == '7' or char == '8' or char == '9':
-        return int(char)
-    elif char == 'X' or char == 'x':
+def get_value(point):
+    if point == '1' or point == '2' or point == '3' or \
+       point == '4' or point == '5' or point == '6' or \
+       point == '7' or point == '8' or point == '9':
+        return int(point)
+    elif point == 'X' or point == 'x':
         return 10
-    elif char == '/':
+    elif point == '/':
         return 10
-    elif char == '-':
+    elif point == '-':
         return 0
     else:
         raise ValueError()
