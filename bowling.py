@@ -1,49 +1,49 @@
 def score(points):
     result = 0
-    frame = 1
+    current_frame = 1
+    max_frame = 10
+    max_point = 10
     first_roll = True
     for i in range(len(points)):
         if points[i] == '/':
-            result += 10 - last
+            result += max_point - last
         else:
             result += get_value(points[i])
 
-        if frame < 10 and get_value(points[i]) == 10:
-            if points[i] == '/':
+        if current_frame < max_frame and get_value(points[i]) == max_point:
+            if points[i].lower() == '/':
                 result += get_value(points[i+1])
-            elif points[i] == 'X' or points[i] == 'x':
+            elif points[i].lower() == 'x':
                 result += get_value(points[i+1])
                 if points[i+2] == '/':
-                    result += 10 - get_value(points[i+1])
+                    result += max_point - get_value(points[i+1])
                 else:
                     result += get_value(points[i+2])
 
         last = get_value(points[i])
 
         if not first_roll:
-            frame += 1
+            current_frame += 1
 
-        if first_roll is True:
+        if first_roll:
             first_roll = False
         else:
             first_roll = True
 
-        if points[i] == 'X' or points[i] == 'x':
+        if points[i].lower() == 'x':
             first_roll = True
-            frame += 1
+            current_frame += 1
     return result
 
 
 def get_value(point):
-    if point == '1' or point == '2' or point == '3' or \
-       point == '4' or point == '5' or point == '6' or \
-       point == '7' or point == '8' or point == '9':
+    max_point = 10
+    min_point = 0
+    if point.isdigit() and (min_point < int(point) < max_point):
         return int(point)
-    elif point == 'X' or point == 'x':
-        return 10
-    elif point == '/':
-        return 10
+    elif point.lower() in 'x/':
+        return max_point
     elif point == '-':
-        return 0
+        return min_point
     else:
         raise ValueError()
