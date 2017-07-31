@@ -1,4 +1,17 @@
 def isspare(result, point, last_point, max_point):
+    """
+    Checks if the current point is a spare, than calculates the point base for that frame.
+    If not than increases the current result with the current score value.
+
+    args:
+        result (int): The sum of the scores so far.
+        point (str): The current point the program is calculating.
+        last_point (int): The score in the first roll before the spare.
+        max_point (int): 10, the number of pins.
+
+    returns:
+        updated result (int)
+    """
     if point == '/':
         result += max_point - last_point
     else:
@@ -7,6 +20,17 @@ def isspare(result, point, last_point, max_point):
 
 
 def change_roll_and_frame(first_roll, current_frame, point):
+    """
+    Changes frame value and roll value.
+
+    args: 
+        first_roll (boolean): Each frame has two rolls determinates if it is the first one.
+        current_frame(int): The number of frame the the program is counting at given time.
+        point (str): the current score, it only matters if it is 'x'.
+
+    returns:
+        updated first_roll and current frame as a tupil. 
+    """
     if first_roll:
         first_roll = False
     else:
@@ -20,6 +44,15 @@ def change_roll_and_frame(first_roll, current_frame, point):
 
 
 def score(game):
+    """
+    Calculates the final score of the bowling game.
+    
+    Arg: 
+        game (str): contains all score from the game as markings ('-', 1-9, '/', 'x'). 
+    
+    returns: 
+        final score (int)
+    """
     result = 0
     current_frame = 1
     max_frame = 10
@@ -40,6 +73,15 @@ def score(game):
 
 
 def get_value(point):
+    """
+    Changes the score marks into number.
+    
+    arg: 
+        point (srt): The marks that needs to be changed to number '-', 1-9, '/', 'x'.
+    
+    returns: 
+        point as a number (int)
+    """
     max_point = 10
     min_point = 0
     if point.isdigit() and (min_point < int(point) < max_point):
