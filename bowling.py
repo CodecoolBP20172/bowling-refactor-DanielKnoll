@@ -50,5 +50,3 @@ def get_value(point):
         return min_point
     else:
         raise ValueError()
-
-print(score("X34----------------"))
