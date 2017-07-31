@@ -6,6 +6,19 @@ def isspare(result, point, last_point, max_point):
     return result
 
 
+def change_roll_and_frame(first_roll, current_frame, point):
+    if first_roll:
+        first_roll = False
+    else:
+        first_roll = True
+        current_frame += 1
+
+    if point == 'x':
+        first_roll = True
+        current_frame += 1
+    return first_roll, current_frame
+
+
 def score(game):
     result = 0
     current_frame = 1
@@ -16,25 +29,13 @@ def score(game):
         result = isspare(result, game[i], get_value(game[i-1]), max_point)
 
         if current_frame < max_frame and game[i].lower() in "x/":
-            if game[i].lower() == '/':
+            if game[i] == '/':
                 result += get_value(game[i+1])
             elif game[i].lower() == 'x':
                 result += get_value(game[i+1])
-                if game[i+2] == '/':
-                    result += max_point - get_value(game[i+1])
-                else:
-                    result += get_value(game[i+2])
-                # isspare(result, game[i+2], get_value(game[i+1]), max_point)
+                result = isspare(result, game[i+2], get_value(game[i+1]), max_point)
 
-        if first_roll:
-            first_roll = False
-        else:
-            first_roll = True
-            current_frame += 1
-
-        if game[i].lower() == 'x':
-            first_roll = True
-            current_frame += 1
+        first_roll, current_frame = change_roll_and_frame(first_roll, current_frame, game[i].lower())
     return result
 
 
@@ -49,3 +50,5 @@ def get_value(point):
         return min_point
     else:
         raise ValueError()
+
+print(score("X34----------------"))
